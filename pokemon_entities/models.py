@@ -1,6 +1,7 @@
 from django.db import models
 
 class Pokemon(models.Model):
+    '''Покемон.'''
     title = models.CharField(max_length=200)
     photo = models.ImageField(upload_to='pokemons')
     description = models.CharField(max_length=2000)
@@ -18,6 +19,7 @@ class Pokemon(models.Model):
 
 
 class PokemonEntity(models.Model):
+    '''Покемон на карте.'''
     lat = models.FloatField()
     lon = models.FloatField()
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
