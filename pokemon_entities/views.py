@@ -64,6 +64,8 @@ def show_pokemon(request, pokemon_id):
     for pokemon_entity in pokemon_entitys:
         pokemon = {
             "title_ru": requested_pokemon.title,
+            "next_evolution": requested_pokemon.next_evolution,
+            "previous_evolution": requested_pokemon.previous_evolution,
             "title_en": requested_pokemon.title_en,
             "title_jp": requested_pokemon.title_jp,
             'img_url': request.build_absolute_uri(requested_pokemon.photo.url),
