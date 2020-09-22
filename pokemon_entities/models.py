@@ -4,9 +4,9 @@ class Pokemon(models.Model):
     '''Покемон.'''
     title = models.CharField(max_length=200)
     photo = models.ImageField(upload_to='pokemons')
-    description = models.CharField(max_length=2000)
-    title_en = models.CharField(max_length=200)
-    title_jp = models.CharField(max_length=200)
+    description = models.CharField(max_length=2000, null=True, blank=True)
+    title_en = models.CharField(max_length=200, null=True, blank=True)
+    title_jp = models.CharField(max_length=200, null=True, blank=True)
     next_evolution = models.ForeignKey(
         "self", on_delete=models.SET_NULL, null=True,
         blank=True, related_name='+')
