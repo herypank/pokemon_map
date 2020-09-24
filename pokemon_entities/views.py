@@ -3,10 +3,9 @@ import json
 import os
 
 from .models import Pokemon, PokemonEntity
-from django.http import HttpResponseNotFound
 from django.shortcuts import render
-
-
+from django.http import HttpResponseNotFound
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned 
 MOSCOW_CENTER = [55.751244, 37.618423]
 DEFAULT_IMAGE_URL = "https://vignette.wikia.nocookie.net/pokemon/images/6/6e/%21.png/revision/latest/fixed-aspect-ratio-down/width/240/height/240?cb=20130525215832&fill=transparent"
 
@@ -50,15 +49,11 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    pokemons = Pokemon.objects.all()
-
-    for pokemon in pokemons:
-        if pokemon.id == int(pokemon_id):
-            requested_pokemon = pokemon
-            break
-    else:
+    try:
+        requested_pokemon = Pokemon.objects.get(id=pokemon_id)
+    except (MultipleObjectsReturned, ObjectDoesNotExist ):
         return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
-
+    
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     pokemon_entitys = PokemonEntity.objects.filter(pokemon__id=requested_pokemon.id)
     for pokemon_entity in pokemon_entitys:
